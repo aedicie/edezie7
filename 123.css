@@ -1,0 +1,224 @@
+html {
+  color-scheme: dark;
+  --bg: #010c3c73;
+  --ink: #e9e6df;
+  --card: #cfd3ce;
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+    
+}
+
+/* ---------- Header ---------- */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.25rem clamp(1rem, 4vw, 3rem);
+   font-size: 1rem;
+  
+}
+  
+ 
+ .brand { color: #ff7700;
+  font-style: italic;
+  text-decoration: underline;
+   font-size: 1rem; }
+.brand strong {
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  margin-right: .6rem;
+}
+.a145 { margin-left: auto; justify-content: flex-end; }
+.h4 { color: #ff7700; font-size: 1rem; font-weight: 800;  ; }
+.a145 {
+  display: flex;  
+  align-items: baseline;
+  gap: 1.25rem;
+  justify-content:  flex-end; 
+  color: orangered;
+}
+ 
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.contact-btn {
+  appearance: none;
+  background: transparent;
+  color: #ff7700;
+  border: 0;
+  border-radius: 14px;
+  padding: .6rem 1.1rem;
+  font: 800 1rem/1 "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  cursor: pointer;
+}
+.contact-btn:hover,
+.contact-btn[aria-expanded="true"] { background: var(--ink); color: var(--bg); }
+.contact-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+.contact-info {
+  padding: .5rem 1.1rem .25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.contact-info[hidden] { display: none; }
+.contact-info a { color: var(--ink); }
+
+/* ---------- Front page ---------- */
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
+}
+h1 {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  max-width: 20em;
+  font-weight: 400;
+  font-size: clamp(1rem, 2vw, 2rem);
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #d8d6cf;
+  text-wrap: pretty;
+  text-align: left;
+}
+
+/* ---------- Pages fanned around a center line ---------- */
+.ring-stage {
+   --card-w: clamp(110px, min(26vw, 70dvh), 300px);
+  --card-h: calc(var(--card-w) * 1.2);
+  flex: 0 0 auto;
+  width: calc(var(--card-w) * 2);
+  position: relative;
+  top: -9rem;
+  display: block;
+  overflow: visible;
+  perspective: 1500px;
+  min-height: calc(var(--card-h) * 1.7);
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+body { overflow-x: clip; }
+.ring-stage { z-index: 1; }
+header { position: relative; z-index: 2; }
+.ring-stage:active { cursor: grabbing; }
+.ring-stage:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+.ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+.ring .card {
+  position: absolute;
+  left: 0;
+  top: calc(var(--card-h) / -2);
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: 0;
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+}
+.ring .card img { display: none; }
+.strip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  transform-origin: 0 50%;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+}
+.axis {
+  position: absolute;
+  left: -1.5px;
+  top: calc(var(--card-h) * -0.65);
+  width: 3px;
+  height: calc(var(--card-h) * 1.3);
+  background: #ff7700;
+  opacity: .6;
+  pointer-events: none;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(31, 37, 35, .6);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img {
+  max-width: 90vw;
+  max-height: 82vh;
+  border-radius: 14px;
+  cursor: default;
+}
+.lightbox button {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 1rem);
+  right: 1rem;
+  appearance: none;
+  border: 0;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: .7rem 1.1rem;
+  font: 800 1rem/1 "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  cursor: pointer;
+}
+.lightbox button:focus-visible { outline: 3px solid var(--bg); outline-offset: 2px; }
+.bin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.bin-back { z-index: 0; }
+ 
+header { position: relative; z-index: 2; }
+main { position: relative; z-index: 1; }
+header { position: relative; z-index: 2; }
+main { position: relative; z-index: 1; }
+/* ---------- Phones ---------- */
+@media (max-width: 700px) {
+  main { flex-direction: column; align-items: flex-start; }
+  .ring-stage {
+    --card-w: clamp(110px, min(34vw, 26dvh), 200px);
+    top: 0;
+    width: 100%;
+    max-width:
+
+
